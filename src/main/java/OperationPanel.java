@@ -1,5 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Description:
@@ -17,9 +21,40 @@ public class OperationPanel extends JPanel {
      */
     Image image;
 
+    private boolean doubleClick = false;
+
     public OperationPanel() {
         // 添加监听
 
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                int count = e.getClickCount();
+                PaintUtils.x = e.getX();
+                PaintUtils.y = e.getY();
+
+                switch (count){
+                    case 1:
+                        doubleClick = false;
+                        Timer t = new Timer(300, new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                clickAction(doubleClick);
+                            }
+                        });
+                        t.setRepeats(false);
+                        t.start();
+                        break;
+                    case 2:
+                        doubleClick = true;
+                        break;
+                    default:
+                        clickAction(true);
+                }
+
+            }
+        });
 
 
     }
@@ -43,7 +78,6 @@ public class OperationPanel extends JPanel {
             Graphics2D graph2D = (Graphics2D) og;
             // 开始画图。
             // 先把 当前画笔里面的 先画出来。
-
             PaintUtils.paintIcons(graph2D);
 
         }
@@ -58,6 +92,22 @@ public class OperationPanel extends JPanel {
         g.drawImage(image, 0, 0, this);
     }
 
+
+    private void clickAction(boolean dbClick) {
+        if (!dbClick) {
+            System.out.println("单击");
+
+
+        } else {
+            System.out.println("双击");
+            og = null;
+            paintComponent();
+            Context context = new Context((Graphics2D)og);
+            context.setState(new StartState());
+            context.action();
+
+        }
+    }
 
 
 

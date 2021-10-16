@@ -33,7 +33,7 @@ public class StartUi extends JFrame {
     /**
      *  放大倍速
      */
-    public static String MAGNIFICATION = "0.1";
+    public static String MAGNIFICATION = "3";
 
     /**
      * 实验 次数

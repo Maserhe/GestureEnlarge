@@ -34,7 +34,5 @@ public class Dialog extends JFrame {
         PaintUtils.init();
         // 绘图
         optPanel.paintComponent();
-
-
     }
 }

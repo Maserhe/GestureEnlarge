@@ -20,6 +20,9 @@ public class PaintUtils {
 
     public static List<Icon> icons;
 
+    public static int x = 0;
+
+    public static int y = 0;
 
     /**
      * 绘制 图形
@@ -91,10 +94,8 @@ public class PaintUtils {
      * @return
      */
     public static boolean isConflict(Icon ic1, Icon ic2) {
-
         boolean flag1 = Math.max(ic1.x, ic2.x) <= Math.min(ic1.x + ic1.width, ic2.x + ic2.width);
         boolean flag2 = Math.max(ic1.y, ic2.y) <= Math.min(ic1.y + ic1.height, ic2.y + ic2.height);
-
         return flag1 && flag2;
     }
 
@@ -145,4 +146,76 @@ public class PaintUtils {
         });
     }
 
+    /**
+     * 获取缩小版 的 图标绘制
+     * @param graphics2D
+     */
+    public static void paintIconsForSmall(Graphics2D graphics2D) {
+        icons.stream().forEach(t->{
+            paintIcon(getRelativeIcon(t), graphics2D);
+        });
+    }
+
+
+    /**
+     * 获取相对图标
+     * @return
+     */
+    public static Icon getRelativeIcon(Icon icon) {
+
+        Icon ans = new Icon();
+        ans.x = icon.x / 2 + getX();
+        ans.y = icon.y / 2 + getY();
+
+        ans.width = icon.width / 2;
+        ans.height = icon.height / 2;
+        ans.color = icon.color;
+
+        return ans;
+    }
+
+
+    /**
+     * 获取 x 的原点位置
+     * @return
+     */
+    public static int getX() {
+        int temp = x;
+        temp -= StartUi.MAX_WIDTH / 4;
+        int ans = temp > 0 ? temp: 0;
+        temp += StartUi.MAX_WIDTH / 2;
+        if (temp > StartUi.MAX_WIDTH) {
+            ans = (int) (StartUi.MAX_WIDTH / 2);
+        }
+        return ans;
+    }
+
+    /**
+     * 获取 y
+     * @return
+     */
+    public static int getY() {
+        int temp = y;
+        temp -= (StartUi.MAX_HEIGHT / 2 + 30);
+        int ans = temp > 0 ? temp:0;
+        return ans;
+    }
+
+    /**
+     * 绘制 长方形
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param graph2D
+     */
+    public static void paintNoFillRect(int x, int y, int width, int height, Graphics2D graph2D) {
+        Rectangle rectangle = new Rectangle(x ,y , width, height);
+        graph2D.setColor(Color.cyan);
+        graph2D.fill(rectangle);
+        graph2D.setStroke(new BasicStroke(1f));
+        graph2D.setColor(Color.black);
+        graph2D.drawRect(x, y, width, height);
+
+    }
 }
