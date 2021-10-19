@@ -21,15 +21,20 @@ public class OperationPanel extends JPanel {
      */
     Image image;
 
+    /**
+     *  点击状态之间的 切换
+     */
+    Context context;
+
     private boolean doubleClick = false;
 
     public OperationPanel() {
         // 添加监听
-
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+
                 int count = e.getClickCount();
                 PaintUtils.x = e.getX();
                 PaintUtils.y = e.getY();
@@ -79,7 +84,6 @@ public class OperationPanel extends JPanel {
             // 开始画图。
             // 先把 当前画笔里面的 先画出来。
             PaintUtils.paintIcons(graph2D);
-
         }
 
         this.repaint();
@@ -94,21 +98,54 @@ public class OperationPanel extends JPanel {
 
 
     private void clickAction(boolean dbClick) {
+        if (context == null) {
+            context = new Context();
+            context.setState(new StartState());
+        }
+
         if (!dbClick) {
             System.out.println("单击");
+            if (context.state instanceof ClickState || context.state instanceof EnlargeState) {
 
+                stateAction();
+            } else {
+                System.out.println("现在不应该点击");
+            }
 
         } else {
             System.out.println("双击");
-            og = null;
-            paintComponent();
-            Context context = new Context((Graphics2D)og);
-            context.setState(new StartState());
-            context.action();
+            if (context.state instanceof StartState) {
+                stateAction();
+            } else {
+                System.out.println("此时不应该双击");
+            }
 
         }
     }
 
 
+    /**
+     * 给一个状态 并进行执行
+     * @param state
+     */
+    private void stateAction(State state) {
+        og = null;
+        paintComponent();
+        context.setOg((Graphics2D) og);
+        context.setState(state);
+        context.action();
+    }
 
+    /**
+     * 执行当前状态
+     */
+    private void stateAction() {
+        og = null;
+        paintComponent();
+        context.setOg((Graphics2D) og);
+        State newState = context.action();
+
+        // 设置下一个状态
+        context.setState(newState);
+    }
 }

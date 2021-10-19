@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * Description:
@@ -164,8 +165,8 @@ public class PaintUtils {
     public static Icon getRelativeIcon(Icon icon) {
 
         Icon ans = new Icon();
-        ans.x = icon.x / 2 + getX();
-        ans.y = icon.y / 2 + getY();
+        ans.x = icon.x / 2 + Context.originX;
+        ans.y = icon.y / 2 + Context.originY;
 
         ans.width = icon.width / 2;
         ans.height = icon.height / 2;
@@ -174,6 +175,14 @@ public class PaintUtils {
         return ans;
     }
 
+    /**
+     * 获取所有的相对图标
+     * @return
+     */
+    public static List<Icon> getRelativeIcons() {
+        final List<Icon> icons = PaintUtils.icons.stream().map(t -> getRelativeIcon(t)).collect(Collectors.toList());
+        return icons;
+    }
 
     /**
      * 获取 x 的原点位置
@@ -216,6 +225,53 @@ public class PaintUtils {
         graph2D.setStroke(new BasicStroke(1f));
         graph2D.setColor(Color.black);
         graph2D.drawRect(x, y, width, height);
-
     }
+
+    /**
+     * 判断 坐标是否在 图标内部
+     * @param x
+     * @param y
+     * @return
+     */
+    public static boolean isInIcon(int x, int y, Icon icon) {
+        final boolean flag1 = x <= icon.x + width && x >= icon.x;
+        final boolean flag2 = y <= icon.y + height && y >= icon.y;
+        return flag1 && flag2;
+    }
+
+    /**
+     *  平移后 是否在 放大的 范围内
+     * @return
+     */
+    public static boolean isInEnlarge(int pinX, int pinY, Icon icon, int startX, int startY) {
+        boolean flag1 = icon.x + pinX >= startX || icon.x + pinX + icon.width <= startX + (int) (StartUi.MAX_WIDTH / 2);
+        boolean flag2 = icon.y + pinY >= startY || icon.y + pinY + icon.height <= startY + (int) (StartUi.MAX_HEIGHT/ 2);
+        return flag1 && flag2;
+    }
+
+
+    /**
+     *
+     * @param icons
+     * @param pinX
+     * @param pinY
+     * @param magnification
+     * @return
+     */
+    public static List<Icon> getEnlargeIcons(List<Icon> icons, int pinX, int pinY, double magnification) {
+
+        List<Icon> ans = icons.stream().map(t -> {
+            Icon icon = new Icon();
+            // 1,  先平移
+            icon.x = t.x + pinX;
+            icon.y = t.y + pinY;
+            icon.width = t.width;
+            icon.height = t.height;
+            icon.color = t.color;
+            // 2， 放大
+            return icon;
+        }).collect(Collectors.toList());
+        return ans;
+    }
+
 }
