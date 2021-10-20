@@ -105,8 +105,7 @@ public class OperationPanel extends JPanel {
 
         if (!dbClick) {
             System.out.println("单击");
-            if (context.state instanceof ClickState || context.state instanceof EnlargeState) {
-
+            if (context.state instanceof ClickState || context.state instanceof EnlargeState || context.state instanceof EnlargeClickState) {
                 stateAction();
             } else {
                 System.out.println("现在不应该点击");

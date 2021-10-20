@@ -28,12 +28,12 @@ public class StartUi extends JFrame {
     /**
      * 实验可点击点 出现 个数  图标数量
      */
-    public static String OCCURRENCE_NUMBER = "10";
+    public static String OCCURRENCE_NUMBER = "1";
 
     /**
      *  放大倍速
      */
-    public static String MAGNIFICATION = "3";
+    public static String MAGNIFICATION = "1";
 
     /**
      * 实验 次数

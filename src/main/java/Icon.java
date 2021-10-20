@@ -24,6 +24,17 @@ public class Icon {
         color = Color.cyan;
     }
 
+    @Override
+    public String toString() {
+        return "Icon{" +
+                "x=" + x +
+                ", y=" + y +
+                ", color=" + color +
+                ", width=" + width +
+                ", height=" + height +
+                '}';
+    }
+
     public Icon(int x, int y, int width, int height, Color color) {
         this.x = x;
         this.y = y;
