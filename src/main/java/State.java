@@ -47,6 +47,7 @@ class Context {
      */
     static Icon smallIcon;
 
+    static int number;
 
     /**
      * 数据 记录
@@ -233,7 +234,7 @@ class EnlargeState implements State {
                 String.valueOf(bigDistance), simpleDateFormat.format(Context.BIG_START_TIME), simpleDateFormat.format(Context.BIG_STOP_TIME), String.valueOf(Context.BIG_STOP_TIME.getTime() - Context.BIG_START_TIME.getTime())
             };
             PaintUtils.writeFileToCsv(data, PaintUtils.getFilePath());
-
+            Context.number ++ ;
             return new StartState();
         } else {
             PaintUtils.paintEnlargeIcon(Context.smallIcon, context);

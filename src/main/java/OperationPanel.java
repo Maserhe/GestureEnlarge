@@ -29,6 +29,8 @@ public class OperationPanel extends JPanel {
     private boolean doubleClick = false;
 
     public OperationPanel() {
+
+
         // 添加监听
         addMouseListener(new MouseAdapter() {
             @Override
@@ -84,6 +86,7 @@ public class OperationPanel extends JPanel {
             // 开始画图。
             // 先把 当前画笔里面的 先画出来。
             PaintUtils.paintIcons(graph2D);
+            PaintUtils.printWord(graph2D);
         }
 
         this.repaint();

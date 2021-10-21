@@ -28,7 +28,7 @@ public class StartUi extends JFrame {
     /**
      * 实验可点击点 出现 个数  图标数量
      */
-    public static String OCCURRENCE_NUMBER = "1";
+    public static String OCCURRENCE_NUMBER = "10";
 
     /**
      *  放大倍速
@@ -68,12 +68,13 @@ public class StartUi extends JFrame {
     private JLabel jlabel2 = new JLabel();
     private JLabel jlabel3 = new JLabel();
     private JLabel jlabel4 = new JLabel();
+    private JLabel jlabel5 = new JLabel();
 
     private JTextField jtext1 = new JTextField(20);
     private JTextField jtext2 = new JTextField(20);
     private JTextField jtext3 = new JTextField(20);
     private JTextField jtext4 = new JTextField(20);
-
+    private JTextField jtext5 = new JTextField(20);
 
     StartUi(){
         super();
@@ -86,7 +87,7 @@ public class StartUi extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         panel0.setBounds(10,50,343,45);
-        panel1.setBounds(10, 300, 343, 45);
+        panel1.setBounds(10, 350, 343, 45);
 
         panel2.setBounds(10, 110, 343, 45);
         panel3.setBounds(10, 170, 343, 45);
@@ -96,33 +97,39 @@ public class StartUi extends JFrame {
 
 
         jlabel1.setText("实验名称:");
-        jlabel1.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+        jlabel1.setFont(new Font("宋体", Font.PLAIN, 12));
         jlabel1.setBounds(20, 60, 135, 25);
         jtext1.setBounds(20, 65, 108, 24);
 
 
 
         jlabel2.setText("图标数量:");
-        jlabel2.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+        jlabel2.setFont(new Font("宋体", Font.PLAIN, 12));
         jlabel2.setBounds(20, 60, 135, 25);
 
         jtext2.setBounds(20, 65, 108, 24);
 
 
         jlabel3.setText("放大倍速:");
-        jlabel3.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+        jlabel3.setFont(new Font("宋体", Font.PLAIN, 12));
         jlabel3.setBounds(20, 60, 135, 25);
 
         jtext3.setBounds(20, 65, 108, 24);
 
 
         jlabel4.setText("实验次数:");
-        jlabel4.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+        jlabel4.setFont(new Font("宋体", Font.PLAIN, 12));
         jlabel4.setBounds(20, 60, 135, 25);
 
         jtext4.setBounds(20, 65, 108, 24);
 
+        jlabel5.setText("方块大小:");
+        jlabel5.setFont(new Font("宋体", Font.PLAIN, 12));
+        jlabel5.setBounds(20, 60, 135, 25);
+
+        jtext5.setBounds(20, 65, 108, 24);
         startButton.setBounds(35, 350, 294, 27);
+
 
         // 添加控件。
         panel0.add(jlabel1);
@@ -138,6 +145,9 @@ public class StartUi extends JFrame {
         panel4.add(jlabel4);
         panel4.add(jtext4);
 
+        panel5.add(jlabel5);
+        panel5.add(jtext5);
+
 
         // 添加面板
         container.add(panel0);
@@ -146,11 +156,13 @@ public class StartUi extends JFrame {
         container.add(panel2);
         container.add(panel3);
         container.add(panel4);
+        container.add(panel5);
 
         setVisible(true);
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Context.number = 1;
                 new Dialog().start();
             }
         });
@@ -161,6 +173,7 @@ public class StartUi extends JFrame {
         jtext2.setText(String.valueOf(OCCURRENCE_NUMBER));
         jtext3.setText(String.valueOf(MAGNIFICATION));
         jtext4.setText(String.valueOf(BLOCK_NUMBER));
+        jtext5.setText(String.valueOf(WIDTH));
 
         // 实验者姓名的监听。
         jtext1.getDocument().addDocumentListener(new DocumentListener() {
@@ -234,6 +247,28 @@ public class StartUi extends JFrame {
             public void removeUpdate(DocumentEvent e) {
                 BLOCK_NUMBER = jtext4.getText().trim();
                 System.out.println("第" + BLOCK_NUMBER + "次重复实验");
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
+
+
+        jtext5.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                WIDTH = jtext5.getText().trim();
+                HEIGHT = jtext5.getText().trim();
+                System.out.println("方块大小" + WIDTH );
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                WIDTH = jtext5.getText().trim();
+                HEIGHT = jtext5.getText().trim();
+                System.out.println("方块大小" + WIDTH );
             }
 
             @Override

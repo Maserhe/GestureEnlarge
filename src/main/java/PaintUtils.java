@@ -31,6 +31,14 @@ public class PaintUtils {
 
     public static int y = 0;
 
+
+
+    public static void printWord(Graphics2D graph2D) {
+
+        graph2D.setFont(new Font("微软雅黑", Font.BOLD, 80));
+        graph2D.drawString(String.valueOf(Context.number), 50 , 100);
+    }
+
     /**
      * 绘制 图形
      * @param x
@@ -349,8 +357,8 @@ public class PaintUtils {
      */
     public static String getFilePath() {
 
-        System.out.println(System.getProperty("user.dir"));
-        String path = System.getProperty("user.dir") + "/data/" + StartUi.USER_NAME;
+        // System.out.println(System.getProperty("user.dir"));
+        String path = System.getProperty("user.dir") + "/data/" + StartUi.USER_NAME + "/放大倍数" + StartUi.MAGNIFICATION;
 
         File f = new File(path);
 
